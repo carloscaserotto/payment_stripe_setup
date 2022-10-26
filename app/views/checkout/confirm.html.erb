@@ -1,0 +1,17 @@
+<script src="https://js.stripe.com/v3/"></script>
+
+<% if  @status == "succeeded"%>
+    Confirm:
+    <p> User email: <%= @current_user %> </p>
+    <p> Order number: <%= @order_number %> </p>
+    <p> Total price: <%= @total_price %> </p>
+    <div id="message"> </div>
+<% else %>
+    There were a problem with your payment!
+    <div id="message"> </div>
+<% end %>
+
+<%= tag :meta, :name => "stripe-key", :content => Rails.application.credentials.stripe[:STRIPE_TEST_PUBLISHABLE_KEY] %>
+<%= javascript_pack_tag 'status'%>
+
+<%= link_to 'Keep purchasing', checkout_path%>

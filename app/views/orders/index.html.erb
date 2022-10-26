@@ -1,0 +1,40 @@
+<%= stripe_javascript_tag %>
+
+<h1>List of products</h1>
+
+<h4>Charges/Payments</h4>
+
+<%= form_with url: "/orders/submit", method: :post, id:"order-details"  do |form| %>
+    <% @products_purchase.each do |product| %>
+    <ul>
+        <%= form.radio_button 'orders[product_id]', "#{product.id}" %><%= product.name%>-$<%= product.price_cents%>
+    </ul>
+    <% end %>
+    <% if @products_subscription %>
+        <% @products_subscription.each do |product| %>
+            <ul>
+                <%= form.radio_button 'orders[product_id]', "SUBSCRIPTION" %><%= product.name%>-$<%= product.price_cents%>
+            </ul>
+        <% end %>
+    <% end %>
+    <h4>Payment Method</h4>        
+        <div id="tab-stripe", class='paymentSelectionTab active'>
+            <div id="submit-paypal">
+                <%= form.radio_button 'orders[payment_gateway]', "stripe", data: {behavior: "clickable"} %> stripe
+            </div>
+        </div>
+        <div id="tab-paypal", class='paymentSelectionTab'>
+            <div id="submit-paypal">
+                <%= form.radio_button 'orders[payment_gateway]', "paypal", data: {behavior: "clickable"} %> paypal<br>
+            </div>
+        </div>
+        <div id= 'card-element'></div>
+         <div id = 'card-errors', role="alert">Error messages:</div>
+        <%= form.submit 'Buy it!', id: "submit-stripe"%>
+<% end %>
+ 
+
+<%= javascript_pack_tag 'index'%>
+
+<%= tag :meta, :name => "stripe-key", :content => Rails.application.credentials.stripe[:STRIPE_TEST_PUBLISHABLE_KEY] %>
+

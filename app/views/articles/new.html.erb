@@ -1,0 +1,8 @@
+<h1>Articles#new</h1>
+<p>Find me in app/views/articles/new.html.erb</p>
+
+<%= form_with model: @article do |form| %>
+    <%= form.text_field :title %><br>
+    <%= form.text_area :body, size: "60x10" %><br>
+    <%= form.submit %>
+<% end%>

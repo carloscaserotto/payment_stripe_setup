@@ -1,0 +1,23 @@
+<%= stripe_javascript_tag %>
+
+
+<h1>Checkout</h1>
+<h3>Your cart: </h3>
+<%= form_with url: "/cart/purchased", method: :post, id:"order-details"  do |form| %>
+    <ul>
+        <%= form.label 'Order number'%>
+        <%= form.text_field 'orders[order_number]', id:"product_name", value: "Orden 1000" %><br>
+        <%= form.label 'Total price'%>
+        <%= form.number_field 'orders[price]', id:"product_amount", value: 5000 %><br>
+        
+    </ul>
+    <div id= 'card-element'></div>
+    <div id = 'card-errors', role="alert"></div>
+    <%= form.submit 'Buy it!', id: "submit-stripe"%>
+<% end %>
+
+
+
+<%= javascript_pack_tag 'carrito'%>
+<%= tag :meta, :name => "stripe-key", :content => Rails.application.credentials.stripe[:STRIPE_TEST_PUBLISHABLE_KEY] %>
+
